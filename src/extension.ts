@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
               className,
               vscode.CompletionItemKind.Keyword
             );
-            item.detail = "Pirulug";
+            item.detail = "Bootstrap 5 IntelliSense";
             return item;
           });
         },
