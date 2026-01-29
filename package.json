@@ -1,11 +1,11 @@
 {
   "name": "intellisense-bootstrap-5-by-pirulug",
   "displayName": "IntelliSense Bootstrap 5 by Pirulug",
-  "description": "Bootstrap 5 IntelliSense: Enhance Bootstrap development with CSS class autocompletion for efficient coding in Visual Studio Code.",
+  "description": "Bootstrap 5 IntelliSense for Visual Studio Code. Provides fast and accurate CSS class autocompletion for HTML and PHP, including HTML embedded in PHP strings.",
   "publisher": "pirulug",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
-  "homepage": "https://github.com/pirulug/bootstrap5-intellisense/blob/master/README.md",
+  "homepage": "https://github.com/pirulug/bootstrap5-intellisense#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/pirulug/bootstrap5-intellisense.git"
@@ -14,18 +14,23 @@
     "url": "https://github.com/pirulug/bootstrap5-intellisense/issues"
   },
   "engines": {
-    "vscode": "^1.92.0"
+    "vscode": "^1.108.0"
   },
   "categories": [
-    "Linters",
+    "Programming Languages",
     "Snippets"
   ],
   "keywords": [
     "bootstrap",
+    "bootstrap 5",
     "bootstrap5",
     "css",
+    "html",
+    "php",
     "intellisense",
     "autocomplete",
+    "web",
+    "frontend",
     "vscode"
   ],
   "icon": "assets/icon.png",
@@ -75,17 +80,17 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.92.0",
-    "@types/mocha": "^10.0.7",
-    "@types/node": "20.x",
-    "@typescript-eslint/eslint-plugin": "^7.14.1",
-    "@typescript-eslint/parser": "^7.11.0",
-    "eslint": "^8.57.0",
-    "typescript": "^5.4.5",
-    "ts-loader": "^9.5.1",
-    "webpack": "^5.92.1",
-    "webpack-cli": "^5.1.4",
-    "@vscode/test-cli": "^0.0.9",
-    "@vscode/test-electron": "^2.4.0"
+    "@types/vscode": "^1.108.1",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "25.x",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
+    "eslint": "^9.39.2",
+    "typescript": "^5.9.3",
+    "ts-loader": "^9.5.4",
+    "webpack": "^5.104.1",
+    "webpack-cli": "^6.0.1",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2"
   }
 }

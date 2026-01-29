@@ -3,12 +3,11 @@ import * as fs from "fs";
 import * as path from "path";
 
 export function activate(context: vscode.ExtensionContext) {
-  // Ruta al archivo JSON
   const jsonPath = path.join(context.extensionPath, "classes.json");
 
   try {
-    // Leer el archivo JSON de manera síncrona
     const classData = JSON.parse(fs.readFileSync(jsonPath, "utf-8"));
+    const classSuggestions: string[] = classData.classes || [];
 
     const provider = vscode.languages.registerCompletionItemProvider(
       ["html", "php"],
@@ -17,33 +16,40 @@ export function activate(context: vscode.ExtensionContext) {
           document: vscode.TextDocument,
           position: vscode.Position
         ) {
-          const lineText = document.lineAt(position).text;
+          const line = document.lineAt(position).text;
+          const beforeCursor = line.slice(0, position.character);
 
-          // Verificar si estamos dentro de un atributo class="" o class=''
-          const doubleQuoteMatch = /class\s*=\s*"[^"]*$/.test(
-            lineText.slice(0, position.character)
-          );
-          const singleQuoteMatch = /class\s*=\s*'[^']*$/.test(
-            lineText.slice(0, position.character)
-          );
+          // Detectar class="" o class='' en HTML o dentro de strings PHP
+          const inClassDouble = /class\s*=\s*"[^"]*$/.test(beforeCursor);
+          const inClassSingle = /class\s*=\s*'[^']*$/.test(beforeCursor);
 
-          if (!doubleQuoteMatch && !singleQuoteMatch) {
-            return undefined;
+          if (!inClassDouble && !inClassSingle) {
+            return;
           }
 
-          // Obtener la lista de clases desde el archivo JSON
-          const classSuggestions = classData.classes;
+          // Obtener solo el fragmento después de class="
+          const match = beforeCursor.match(/class\s*=\s*["']([^"']*)$/);
 
-          return classSuggestions.map((className: string) => {
-            const item = new vscode.CompletionItem(
-              className,
-              vscode.CompletionItemKind.Keyword
-            );
-            item.detail = "Bootstrap 5 IntelliSense";
-            return item;
-          });
+          const currentWord = match ? match[1].split(/\s+/).pop() || "" : "";
+
+          const start = position.translate(0, -currentWord.length);
+          const range = new vscode.Range(start, position);
+
+          return classSuggestions
+            .filter((cls) => cls.startsWith(currentWord))
+            .map((cls) => {
+              const item = new vscode.CompletionItem(
+                cls,
+                vscode.CompletionItemKind.Keyword
+              );
+              item.detail = "Bootstrap 5 IntelliSense";
+              item.range = range;
+              item.insertText = cls;
+              return item;
+            });
         },
       },
+      " ",
       '"',
       "'"
     );
